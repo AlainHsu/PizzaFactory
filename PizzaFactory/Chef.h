@@ -40,6 +40,6 @@
 @optional
 - (void)chef:(Chef *)chef remaindOrdersNumber:(NSInteger)number;
 
-- (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder*)PizzaOrder;
+- (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder*)order;
 
 @end

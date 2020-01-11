@@ -20,5 +20,31 @@
     return self;
 }
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+- (id) initWithCoder: (NSCoder *)coder  {
+    if (self = [super init]) {
+        self.orderId = [coder decodeIntegerForKey:@"order_id"];
+
+        self.size = [coder decodeIntegerForKey:@"order_size"];
+
+        self.toppings = [coder decodeObjectOfClass:[NSSet class] forKey:@"order_toppings"];
+
+    }
+
+    return self;
+}
+
+- (void) encodeWithCoder: (NSCoder *)coder {
+    
+    [coder encodeInteger:self.orderId forKey:@"order_id"];
+
+    [coder encodeInteger:self.size forKey:@"order_size"];
+
+    [coder encodeObject:self.toppings forKey:@"order_toppings"];
+
+}
 
 @end

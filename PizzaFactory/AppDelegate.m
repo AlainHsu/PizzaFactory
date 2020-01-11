@@ -20,6 +20,16 @@
     return YES;
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        
+    }];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+
+}
+
 
 #pragma mark - UISceneSession lifecycle
 

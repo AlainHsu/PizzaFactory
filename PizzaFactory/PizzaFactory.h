@@ -11,22 +11,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol PizzaFactoryDelegate <ChefDelegate>
+
+@end
+
 @interface PizzaFactory : NSObject
 
 @property (strong, nonatomic) NSMutableArray *chefs;
+
+@property (weak, nonatomic) id<PizzaFactoryDelegate>delegate;
 
 + (instancetype)new NS_UNAVAILABLE;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithChefs:(NSArray<Chef *> *)chefs;
+- (instancetype)initWithChefs:(NSInteger)number;
 
-- (PizzaOrder *)createOrder:(PizzaSize)size toppings:(NSSet<NSString *> *)toppings;
+- (void)createOrder:(PizzaSize)size toppings:(NSSet<NSString *> *)toppings;
 
-- (NSArray <PizzaOrder *> *)createOrders:(NSInteger)count size:(PizzaSize)size toppings:(NSSet<NSString *> *)toppings;
-
-
-- (void)addOrders:(NSArray<PizzaOrder *> *)orders;
+- (void)createOrders:(NSInteger)count size:(PizzaSize)size toppings:(NSSet<NSString *> *)toppings;
 
 - (void)openFactory:(BOOL)open;
 
