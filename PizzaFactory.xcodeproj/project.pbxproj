@@ -17,6 +17,14 @@
 		9F0600C623C9C3F200837F5A /* PizzaOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600C523C9C3F200837F5A /* PizzaOrder.m */; };
 		9F0600C923C9C42600837F5A /* Chef.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600C823C9C42600837F5A /* Chef.m */; };
 		9F0600CC23C9C46200837F5A /* PizzaFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600CA23C9C46200837F5A /* PizzaFactory.m */; };
+		9F0600D523C9FADC00837F5A /* ChefStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600D423C9FADC00837F5A /* ChefStatusCell.m */; };
+		9F0600D823C9FAFD00837F5A /* ChefInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600D723C9FAFD00837F5A /* ChefInfoCell.m */; };
+		9F0600DB23C9FB2700837F5A /* ChefOrdersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600DA23C9FB2700837F5A /* ChefOrdersCell.m */; };
+		9F0600DE23C9FB4700837F5A /* FactorySummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600DD23C9FB4700837F5A /* FactorySummaryCell.m */; };
+		9F0600E123C9FB8800837F5A /* AddPizzaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600E023C9FB8800837F5A /* AddPizzaCell.m */; };
+		9F0600E423C9FB9D00837F5A /* FactoryStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600E323C9FB9D00837F5A /* FactoryStatusCell.m */; };
+		9F0600E723C9FBD600837F5A /* HomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600E623C9FBD600837F5A /* HomeController.m */; };
+		9F0600EA23CA064600837F5A /* PizzaOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600E923CA064600837F5A /* PizzaOrderCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +46,22 @@
 		9F0600C823C9C42600837F5A /* Chef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chef.m; sourceTree = "<group>"; };
 		9F0600CA23C9C46200837F5A /* PizzaFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PizzaFactory.m; sourceTree = "<group>"; };
 		9F0600CB23C9C46200837F5A /* PizzaFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PizzaFactory.h; sourceTree = "<group>"; };
+		9F0600D323C9FADC00837F5A /* ChefStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChefStatusCell.h; sourceTree = "<group>"; };
+		9F0600D423C9FADC00837F5A /* ChefStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChefStatusCell.m; sourceTree = "<group>"; };
+		9F0600D623C9FAFD00837F5A /* ChefInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChefInfoCell.h; sourceTree = "<group>"; };
+		9F0600D723C9FAFD00837F5A /* ChefInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChefInfoCell.m; sourceTree = "<group>"; };
+		9F0600D923C9FB2700837F5A /* ChefOrdersCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChefOrdersCell.h; sourceTree = "<group>"; };
+		9F0600DA23C9FB2700837F5A /* ChefOrdersCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChefOrdersCell.m; sourceTree = "<group>"; };
+		9F0600DC23C9FB4700837F5A /* FactorySummaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FactorySummaryCell.h; sourceTree = "<group>"; };
+		9F0600DD23C9FB4700837F5A /* FactorySummaryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FactorySummaryCell.m; sourceTree = "<group>"; };
+		9F0600DF23C9FB8800837F5A /* AddPizzaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddPizzaCell.h; sourceTree = "<group>"; };
+		9F0600E023C9FB8800837F5A /* AddPizzaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddPizzaCell.m; sourceTree = "<group>"; };
+		9F0600E223C9FB9D00837F5A /* FactoryStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FactoryStatusCell.h; sourceTree = "<group>"; };
+		9F0600E323C9FB9D00837F5A /* FactoryStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FactoryStatusCell.m; sourceTree = "<group>"; };
+		9F0600E523C9FBD600837F5A /* HomeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeController.h; sourceTree = "<group>"; };
+		9F0600E623C9FBD600837F5A /* HomeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeController.m; sourceTree = "<group>"; };
+		9F0600E823CA064600837F5A /* PizzaOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PizzaOrderCell.h; sourceTree = "<group>"; };
+		9F0600E923CA064600837F5A /* PizzaOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PizzaOrderCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +100,22 @@
 				9F0600AF23C9C38400837F5A /* SceneDelegate.m */,
 				9F0600B123C9C38400837F5A /* ViewController.h */,
 				9F0600B223C9C38400837F5A /* ViewController.m */,
+				9F0600E523C9FBD600837F5A /* HomeController.h */,
+				9F0600E623C9FBD600837F5A /* HomeController.m */,
+				9F0600D323C9FADC00837F5A /* ChefStatusCell.h */,
+				9F0600D423C9FADC00837F5A /* ChefStatusCell.m */,
+				9F0600D623C9FAFD00837F5A /* ChefInfoCell.h */,
+				9F0600D723C9FAFD00837F5A /* ChefInfoCell.m */,
+				9F0600D923C9FB2700837F5A /* ChefOrdersCell.h */,
+				9F0600DA23C9FB2700837F5A /* ChefOrdersCell.m */,
+				9F0600E823CA064600837F5A /* PizzaOrderCell.h */,
+				9F0600E923CA064600837F5A /* PizzaOrderCell.m */,
+				9F0600DC23C9FB4700837F5A /* FactorySummaryCell.h */,
+				9F0600DD23C9FB4700837F5A /* FactorySummaryCell.m */,
+				9F0600DF23C9FB8800837F5A /* AddPizzaCell.h */,
+				9F0600E023C9FB8800837F5A /* AddPizzaCell.m */,
+				9F0600E223C9FB9D00837F5A /* FactoryStatusCell.h */,
+				9F0600E323C9FB9D00837F5A /* FactoryStatusCell.m */,
 				9F0600CB23C9C46200837F5A /* PizzaFactory.h */,
 				9F0600CA23C9C46200837F5A /* PizzaFactory.m */,
 				9F0600C723C9C42600837F5A /* Chef.h */,
@@ -161,13 +201,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F0600E423C9FB9D00837F5A /* FactoryStatusCell.m in Sources */,
 				9F0600B323C9C38400837F5A /* ViewController.m in Sources */,
 				9F0600C923C9C42600837F5A /* Chef.m in Sources */,
+				9F0600DB23C9FB2700837F5A /* ChefOrdersCell.m in Sources */,
+				9F0600DE23C9FB4700837F5A /* FactorySummaryCell.m in Sources */,
+				9F0600E123C9FB8800837F5A /* AddPizzaCell.m in Sources */,
 				9F0600AD23C9C38400837F5A /* AppDelegate.m in Sources */,
+				9F0600D823C9FAFD00837F5A /* ChefInfoCell.m in Sources */,
+				9F0600E723C9FBD600837F5A /* HomeController.m in Sources */,
 				9F0600C623C9C3F200837F5A /* PizzaOrder.m in Sources */,
 				9F0600BE23C9C38500837F5A /* main.m in Sources */,
+				9F0600D523C9FADC00837F5A /* ChefStatusCell.m in Sources */,
 				9F0600CC23C9C46200837F5A /* PizzaFactory.m in Sources */,
 				9F0600B023C9C38400837F5A /* SceneDelegate.m in Sources */,
+				9F0600EA23CA064600837F5A /* PizzaOrderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,7 +364,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = alain.hsu.PizzaFactory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -333,7 +381,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = alain.hsu.PizzaFactory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

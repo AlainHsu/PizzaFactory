@@ -21,6 +21,8 @@ typedef enum : NSUInteger {
 
 @property (assign, nonatomic) NSInteger orderId;
 
+@property (assign, nonatomic) NSInteger chefId;
+
 @property (assign, nonatomic) NSInteger size;
 
 @property (strong, nonatomic) NSSet * toppings;

@@ -100,6 +100,7 @@
     for (PizzaOrder *order in orders) {
         Chef *chef = [self.chefs objectAtIndex: order.orderId % (self.chefs.count)];
         [chef addOrder:order];
+        order.chefId = chef.chefId;
     }
 }
 
