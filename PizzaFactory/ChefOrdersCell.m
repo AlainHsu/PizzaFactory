@@ -33,11 +33,11 @@
     _dataSource = [NSMutableArray new];
 }
 
--(void)reloadOrders:(NSArray<PizzaOrder *> *)dataSource
+-(void)reloadOrders:(NSArray<PizzaOrder *> *)dataSource {
     
 }
 
-- (void)editButtonPressed:(id)sender{
+-(void)editButtonPressed:(id)sender{
     UIView *v = [sender superview];
     UITableViewCell *cell = (UITableViewCell *)[v superview];
       

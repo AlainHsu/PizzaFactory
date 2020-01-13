@@ -25,29 +25,36 @@
 
     // Uncomment the following line to preserve selection between presentations
      self.clearsSelectionOnViewWillAppear = NO;
+
 }
 
 #pragma mark <UICollectionViewDelegateFlowLayout>
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+
     switch (indexPath.section) {
         case 0:
-            return CGSizeMake((collectionView.frame.size.width - 1 ) /  7  - 1, collectionView.frame.size.height / 4 - 10);
+            return CGSizeMake(width  / 7 , height / 4 - 10);
             break;
         case 1:
-            return CGSizeMake((collectionView.frame.size.width - 1 ) /  7  - 1, collectionView.frame.size.height / 8);
+            return CGSizeMake(width / 7 ,  height / 8 + 10);
             break;
         case 2:
-            return CGSizeMake((collectionView.frame.size.width - 1 ) /  7  - 1, collectionView.frame.size.height / 2 - 50);
+            return CGSizeMake(width / 7 , height / 2 - 50);
             break;
         case 3:
         {
+            // TODO: Cell width is not correct, may cause by percision
             if (indexPath.row == 0) {
-                return CGSizeMake((collectionView.frame.size.width - 1 ) /  7 * 3 - 1 , collectionView.frame.size.height / 8 + 30);
+                return CGSizeMake(width / 7 * 3 + 0.39, height / 8 + 30);
 
             } else {
-                return CGSizeMake((collectionView.frame.size.width - 1 ) /  7 - 1, collectionView.frame.size.height / 8  + 30);
+                return CGSizeMake(width / 7 + 0.9642 , height / 8  + 30);
             }
+            
         }
             break;
         default:
@@ -57,14 +64,14 @@
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(1, 1, 1, 1);
+    return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 1;
+    return -1;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 1;
+    return -1;
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -84,38 +91,58 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    UICollectionViewCell *collectionViewCell;
     if (indexPath.section == 0) {
         ChefStatusCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ChefStatusCell" forIndexPath:indexPath];
         [cell.headImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%ld.png",indexPath.row]]];
         
-        return cell;
+        collectionViewCell =  cell;
     }else if (indexPath.section == 1) {
         ChefInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ChefInfoCell" forIndexPath:indexPath];
-        return cell;
-    
+        collectionViewCell =  cell;
+
     }else if (indexPath.section == 2) {
         ChefOrdersCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ChefOrdersCell" forIndexPath:indexPath];
-        return cell;
+        collectionViewCell =  cell;
     }else {
         if (indexPath.row == 0) {
             FactorySummaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FactorySummaryCell" forIndexPath:indexPath];
-            return cell;
+            collectionViewCell =  cell;
         } else if (indexPath.row == 1){
             UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SpaceCell" forIndexPath:indexPath];
-            return cell;
+            collectionViewCell =  cell;
         } else if (indexPath.row == 2 ){
             AddPizzaCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddPizzaCell" forIndexPath:indexPath];
             [cell.addButton setTitle:@"Add 10 Pizza" forState:0];
-            return cell;
+            collectionViewCell =  cell;
         } else if (indexPath.row == 3){
             AddPizzaCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddPizzaCell" forIndexPath:indexPath];
             [cell.addButton setTitle:@"Add 100 Pizza" forState:0];
-            return cell;
+            collectionViewCell =  cell;
         } else {
             FactoryStatusCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FactoryStatusCell" forIndexPath:indexPath];
-            return cell;
+            collectionViewCell =  cell;
         }
     }
+    
+    
+    collectionViewCell.clipsToBounds = YES;
+
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.borderColor = [UIColor lightGrayColor].CGColor;
+    rightBorder.borderWidth = 1;
+    rightBorder.frame = CGRectMake(1, 0, 1, collectionViewCell.frame.size.height);
+
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.borderColor = [UIColor lightGrayColor].CGColor;
+    bottomBorder.borderWidth = 1;
+    bottomBorder.frame = CGRectMake(0, 1, collectionViewCell.frame.size.width, 1);
+
+    [collectionViewCell.layer addSublayer:rightBorder];
+    [collectionViewCell.layer addSublayer:bottomBorder];
+
+    
+    return collectionViewCell;
 }
 
 @end
