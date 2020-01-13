@@ -21,8 +21,10 @@
 - (instancetype)initWithChefId:(NSInteger)identifier cookingTime:(NSInteger)second  remainOrders:(NSArray<PizzaOrder *> *)orders {
     if (self = [super init]) {
         self.chefId = identifier;
+        self.name = [NSString stringWithFormat:@"Pizza Chef %ld", identifier];
         self.cookingTime = second;
         self.remainOrders = [[NSMutableArray alloc] initWithArray:orders];
+        self.isWorking = NO;
         self.dropOrders = [NSMutableArray new];
         
         _cookingQueue = [NSOperationQueue new];
@@ -86,6 +88,8 @@
 }
 
 - (void)startCooking:(BOOL)fire {
+    
+    self.isWorking = fire;
     
     if (fire == _cookingQueue.isSuspended) {
         if (!fire && _cookingQueue.operationCount > 0 && ![self.dropOrders containsObject:self.currentOrder]) {

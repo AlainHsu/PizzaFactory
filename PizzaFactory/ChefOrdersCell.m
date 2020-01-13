@@ -34,7 +34,15 @@
 }
 
 -(void)reloadOrders:(NSArray<PizzaOrder *> *)dataSource {
-    
+    [self.dataSource removeAllObjects];
+    [self.dataSource addObjectsFromArray:dataSource];
+    [self.tableView reloadData];
+}
+
+-(void)removeOrder:(PizzaOrder *)order {
+    NSInteger index = [self.dataSource indexOfObject:order];
+    [self.dataSource removeObject:order];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(void)editButtonPressed:(id)sender{

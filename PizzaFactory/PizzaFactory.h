@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PizzaFactory : NSObject
 
-@property (strong, nonatomic) NSMutableArray *chefs;
+@property (strong, nonatomic) NSMutableArray<Chef *> *chefs;
 
 @property (weak, nonatomic) id<PizzaFactoryDelegate>delegate;
 

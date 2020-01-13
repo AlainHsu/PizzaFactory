@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)reloadOrders:(NSArray<PizzaOrder *> *)dataSource;
 
+-(void)removeOrder:(PizzaOrder *)order;
+
 @end
 
 NS_ASSUME_NONNULL_END

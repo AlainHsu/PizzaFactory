@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *chef2Label;
 @property (weak, nonatomic) IBOutlet UILabel *chef3Label;
 @property (weak, nonatomic) IBOutlet UILabel *chef4Label;
-@property (weak, nonatomic) IBOutlet UILabel *che5Label;
+@property (weak, nonatomic) IBOutlet UILabel *chef5Label;
 @property (weak, nonatomic) IBOutlet UILabel *chef6Label;
 
 @end

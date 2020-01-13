@@ -247,12 +247,12 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="542" height="250"/>
                                 <connections>
-                                    <outlet property="che5Label" destination="i6c-3e-ohK" id="BjR-xL-Zy9"/>
                                     <outlet property="chef0Label" destination="s2t-Ee-dTt" id="5xE-VA-GV7"/>
                                     <outlet property="chef1Label" destination="FCH-fD-lef" id="3zx-hL-nm3"/>
                                     <outlet property="chef2Label" destination="g9a-I0-GiU" id="oPA-Fq-8nL"/>
                                     <outlet property="chef3Label" destination="li2-8k-cgB" id="TNq-qh-tNZ"/>
                                     <outlet property="chef4Label" destination="AD6-WX-Tgn" id="KQz-fv-PQq"/>
+                                    <outlet property="chef5Label" destination="i6c-3e-ohK" id="cQL-ed-j0M"/>
                                     <outlet property="chef6Label" destination="UkG-8W-tsk" id="Qhr-9v-ZtG"/>
                                 </connections>
                             </collectionViewCell>

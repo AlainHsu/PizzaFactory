@@ -99,8 +99,8 @@
 - (void)addOrders:(NSArray<PizzaOrder *> *)orders {
     for (PizzaOrder *order in orders) {
         Chef *chef = [self.chefs objectAtIndex: order.orderId % (self.chefs.count)];
-        [chef addOrder:order];
         order.chefId = chef.chefId;
+        [chef addOrder:order];
     }
 }
 
@@ -112,8 +112,9 @@
 
 #pragma mark <ChefDelegate>
 - (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder *)order {
-    
-    NSLog(@"chef: %ld finished order: %ld", chef.chefId, order.orderId);
+    if (self.delegate && [self.delegate respondsToSelector:@selector(chef:didFinishedOrder:)]) {
+        [self.delegate chef:chef didFinishedOrder:order];
+    }
     
     // Clear order in storage
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

@@ -15,9 +15,13 @@
 
 @property (assign, nonatomic) NSInteger chefId;
 
+@property (copy, nonatomic) NSString *name;
+
 @property (assign, nonatomic) NSInteger cookingTime;
 
 @property (strong, nonatomic) NSMutableArray<PizzaOrder *> * remainOrders;
+
+@property (assign, nonatomic) BOOL isWorking;
 
 @property (weak, nonatomic) id<ChefDelegate>delegate;
 
@@ -38,6 +42,7 @@
 @protocol ChefDelegate <NSObject>
 
 @optional
+
 - (void)chef:(Chef *)chef remaindOrdersNumber:(NSInteger)number;
 
 - (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder*)order;
