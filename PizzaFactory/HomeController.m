@@ -16,12 +16,21 @@
 
 #import "PizzaFactory.h"
 
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
+
 #define IS_FIRST_LAUNCH @"is_first_launch"
 
-@interface HomeController ()<UICollectionViewDelegateFlowLayout, ChefOrderCellDelegate, PizzaFactoryDelegate>
+@interface HomeController ()<UICollectionViewDelegateFlowLayout, ChefOrderCellDelegate, PizzaFactoryDelegate, MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCAdvertiserAssistantDelegate>
 
 @property (strong, nonatomic) PizzaFactory *factory;
 @property (strong, nonatomic) NSSet *defaultToppings;
+
+@property (strong, nonatomic) MCPeerID * peerID;
+@property (strong, nonatomic) MCSession * session;
+@property (strong, nonatomic) MCAdvertiserAssistant * advertiser;
+@property (strong, nonatomic) MCNearbyServiceBrowser * brower;
+@property (strong, nonatomic) MCBrowserViewController * browserViewController;
+@property (nonatomic,strong)NSMutableArray * sessionArray;
 
 @end
 
@@ -45,10 +54,31 @@
         [defaults setInteger:1 forKey:IS_FIRST_LAUNCH];
     }
     
-    [self.factory openFactory:YES];
+//    [self.factory openFactory:YES];
+    
+    [self createMC];
 }
 
-#pragma mark Actions
+- (void)createMC{
+    
+    _sessionArray = [NSMutableArray new];
+
+    NSString * name = [UIDevice currentDevice].name;
+    _peerID = [[MCPeerID alloc]initWithDisplayName:name];
+    
+    _session = [[MCSession alloc]initWithPeer:_peerID];
+    _session.delegate = self;
+    
+    _advertiser = [[MCAdvertiserAssistant alloc]initWithServiceType:@"pizza-factory" discoveryInfo:nil session:_session];
+    _advertiser.delegate = self;
+    [_advertiser start];
+    
+    _brower = [[MCNearbyServiceBrowser alloc]initWithPeer:_peerID serviceType:@"pizza-factory"];
+    _brower.delegate = self;
+    [_brower startBrowsingForPeers];
+}
+
+#pragma mark - UI Actions
 
 - (void)didChangedChefStatus:(UISwitch *)sender {
     UIView *v = [sender superview];
@@ -106,10 +136,30 @@
 }
 
 -(void)didClickDelegateOrder:(PizzaOrder *)order {
-    
+        
+    if (self.session.connectedPeers.count == 0) {
+                
+        UIAlertController *delegateAlert = [UIAlertController alertControllerWithTitle:nil message:@"Discover other Pizza factory?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [delegateAlert dismissViewControllerAnimated:YES completion:nil];
+            
+            if (self->_browserViewController == nil) {
+                self->_browserViewController = [[MCBrowserViewController alloc]initWithServiceType:@"pizza-factory" session:self->_session];
+                self->_browserViewController.delegate = self;
+
+                [self presentViewController:self->_browserViewController animated:YES completion:nil];
+            }
+
+        }];
+        [delegateAlert addAction:cancel];
+        [delegateAlert addAction:ok];
+        [self presentViewController:delegateAlert animated:YES completion:nil];
+
+    }
 }
 
-#pragma mark PizzaFactoryDelegate
+#pragma mark - <PizzaFactoryDelegate>
 
 - (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder *)order {
     
@@ -125,7 +175,7 @@
     });
 }
 
-#pragma mark <UICollectionViewDelegateFlowLayout>
+#pragma mark - <UICollectionViewDelegateFlowLayout>
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -144,12 +194,11 @@
             break;
         case 3:
         {
-            // TODO: Cell width is not correct, may cause by percision
             if (indexPath.row == 0) {
-                return CGSizeMake(width / 7 * 3 + 0.39, height / 8 + 30);
+                return CGSizeMake(width / 7 * 3, height / 8 + 30);
 
             } else {
-                return CGSizeMake(width / 7 + 0.9642 , height / 8  + 30);
+                return CGSizeMake(width / 7 , height / 8  + 30);
             }
             
         }
@@ -258,6 +307,84 @@
 
     
     return collectionViewCell;
+}
+
+#pragma mark - <MCNearbyServiceBrowserDelegate>
+
+- (void)advertiserAssistantWillPresentInvitation:(MCAdvertiserAssistant *)advertiserAssistant {
+    NSLog(@"advertiserAssistantWillPresentInvitation");
+}
+
+// An invitation was dismissed from screen.
+- (void)advertiserAssistantDidDismissInvitation:(MCAdvertiserAssistant *)advertiserAssistant {
+    NSLog(@"advertiserAssistantDidDismissInvitation");
+}
+
+
+- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info{
+    NSLog(@"found peer: %@", peerID.displayName);
+    if (_browserViewController == nil) {
+        _browserViewController = [[MCBrowserViewController alloc]initWithServiceType:@"pizza-factory" session:_session];
+        _browserViewController.delegate = self;
+
+        [self presentViewController:_browserViewController animated:YES completion:nil];
+    }
+}
+
+- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID{
+    NSLog(@"lost peer: %@",peerID.displayName);
+}
+
+
+#pragma mark <MCBrowserViewControllerDelegate>
+
+- (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _browserViewController = nil;
+}
+
+- (void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _browserViewController = nil;
+}
+
+#pragma mark <MCSessionDelegate>
+
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state{
+
+    if (state == MCSessionStateConnected) {
+        
+        if (![_sessionArray containsObject:session]) {
+
+            [_sessionArray addObject:session];
+        }
+        
+        NSLog(@"connectedPeers %@", _session.connectedPeers);
+    }
+}
+
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID{
+    NSString * message = [NSString stringWithFormat:@"%@:%@",peerID.displayName,[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // TODO: data handling
+    });
+}
+
+- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID{
+    
+}
+
+- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress{
+
+}
+
+- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error{
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end
