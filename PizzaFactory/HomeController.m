@@ -33,7 +33,7 @@
     // Uncomment the following line to preserve selection between presentations
      self.clearsSelectionOnViewWillAppear = NO;
     
-    self.defaultToppings = [[NSSet alloc] initWithObjects:TOPPINGS_ROAST_BEEF,TOPPINGS_BELL_PEPPERS,TOPPINGS_MUSHROOMS,TOPPINGS_ONIONS,TOPPINGS_TOMATOES,TOPPINGS__MARINARA, nil];
+    self.defaultToppings = [[NSSet alloc] initWithObjects:TOPPINGS_ROAST_BEEF,TOPPINGS_BELL_PEPPERS,TOPPINGS_MUSHROOMS,TOPPINGS_ONIONS,TOPPINGS_TOMATOES,TOPPINGS_MARINARA, nil];
     
     self.factory = [[PizzaFactory alloc] initWithChefs:7];
     self.factory.delegate = self;
@@ -41,7 +41,7 @@
     NSUserDefaults *defaults =  [NSUserDefaults standardUserDefaults];
     if ([defaults integerForKey:IS_FIRST_LAUNCH] != 1) {
                 
-        [self.factory createOrders:100 size:PizzaSizeMedium toppings:self.defaultToppings];
+        [self.factory createOrders:1000 size:PizzaSizeMedium toppings:self.defaultToppings];
         [defaults setInteger:1 forKey:IS_FIRST_LAUNCH];
     }
     
@@ -96,6 +96,16 @@
     }
     
     [self.factory openFactory:sender.isOn];
+    
+}
+
+#pragma mark <ChefOrderCellDelegate>
+
+-(void)didClickEditOrder:(PizzaOrder *)order {
+    NSLog(@"edit %ld",order.orderId);
+}
+
+-(void)didClickDelegateOrder:(PizzaOrder *)order {
     
 }
 
@@ -194,6 +204,7 @@
 
     }else if (indexPath.section == 2) {
         ChefOrdersCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ChefOrdersCell" forIndexPath:indexPath];
+        cell.delegate = self;
         [cell reloadOrders:self.factory.chefs[indexPath.row].remainOrders];
         collectionViewCell =  cell;
     }else {

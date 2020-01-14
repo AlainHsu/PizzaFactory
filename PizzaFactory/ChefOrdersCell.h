@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ChefOrderCellDelegate <NSObject>
 
 @optional
--(void)didClickEditButton:(NSInteger)index;
+-(void)didClickEditOrder:(PizzaOrder *)order;
+
+-(void)didClickDelegateOrder:(PizzaOrder *)order;
 
 @end
 

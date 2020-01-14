@@ -50,8 +50,18 @@
     UITableViewCell *cell = (UITableViewCell *)[v superview];
       
     NSIndexPath *indexpath = [self.tableView indexPathForCell:cell];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickEditButton:)]) {
-        [self.delegate didClickEditButton:indexpath.row];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickEditOrder:)]) {
+        [self.delegate didClickEditOrder:self.dataSource[indexpath.row]];
+    }
+}
+
+-(void)delegateButtonPressed:(id)sender{
+    UIView *v = [sender superview];
+    UITableViewCell *cell = (UITableViewCell *)[v superview];
+      
+    NSIndexPath *indexpath = [self.tableView indexPathForCell:cell];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickDelegateOrder:)]) {
+        [self.delegate didClickDelegateOrder:self.dataSource[indexpath.row]];
     }
 }
 
@@ -64,6 +74,7 @@
     cell.orderIdLabel.textColor = _mainColor;
     cell.orderIdLabel.backgroundColor = _secondaryColor;
     [cell.editButton addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.delegateButton addTarget:self action:@selector(delegateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
