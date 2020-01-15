@@ -33,7 +33,9 @@
 
 - (void)addOrder:(PizzaOrder*)order;
 
-- (void)updateOrder:(PizzaOrder*)PizzaOrder succeed:(void(^)(void))success fail:(void(^)(NSString *))failure;
+- (void)updateOrder:(PizzaOrder*)order succeed:(void(^)(void))success fail:(void(^)(NSString *))failure;
+
+- (void)cancelOrder:(PizzaOrder *)order succeed:(void(^)(void))success fail:(void(^)(NSString *))failure;
 
 - (void)startCooking:(BOOL)fire;
 
@@ -46,5 +48,7 @@
 - (void)chef:(Chef *)chef remaindOrdersNumber:(NSInteger)number;
 
 - (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder*)order;
+
+- (void)chef:(Chef *)chef didCanceledOrder:(PizzaOrder*)order;
 
 @end

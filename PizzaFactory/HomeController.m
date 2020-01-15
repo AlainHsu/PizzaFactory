@@ -50,7 +50,7 @@
     NSUserDefaults *defaults =  [NSUserDefaults standardUserDefaults];
     if ([defaults integerForKey:IS_FIRST_LAUNCH] != 1) {
                 
-        [self.factory createOrders:1000 size:PizzaSizeMedium toppings:self.defaultToppings];
+        [self.factory createOrders:20 size:PizzaSizeMedium toppings:self.defaultToppings];
         [defaults setInteger:1 forKey:IS_FIRST_LAUNCH];
     }
     
@@ -132,13 +132,14 @@
 
 -(void)didClickEditOrder:(PizzaOrder *)order {
     NSLog(@"edit %ld",order.orderId);
+    
 }
 
 -(void)didClickDelegateOrder:(PizzaOrder *)order {
         
     if (self.session.connectedPeers.count == 0) {
-                
-        UIAlertController *delegateAlert = [UIAlertController alertControllerWithTitle:nil message:@"Discover other Pizza factory?" preferredStyle:UIAlertControllerStyleAlert];
+                        
+        UIAlertController *delegateAlert = [UIAlertController alertControllerWithTitle:@"Factory Not Found" message:@"Discover other Pizza factory?" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             [delegateAlert dismissViewControllerAnimated:YES completion:nil];
@@ -156,6 +157,39 @@
         [self presentViewController:delegateAlert animated:YES completion:nil];
 
     } else {
+
+        MCPeerID *delegatedPeer = self.session.connectedPeers.firstObject;
+        
+        __block UIAlertController *delegateAlert = [UIAlertController alertControllerWithTitle:@"Delegate Confirm" message:[NSString stringWithFormat:@"Do you want to delegate order to %@", delegatedPeer.displayName] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+           
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:order requiringSecureCoding:YES error:nil];
+            
+            [self->_factory cancelOrder:order succeed:^{
+                
+                [self->_session sendData:data toPeers:@[delegatedPeer] withMode:MCSessionSendDataReliable error:nil];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [delegateAlert dismissViewControllerAnimated:YES completion:nil];
+                });
+                
+            } fail:^(NSString * _Nonnull message) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [delegateAlert dismissViewControllerAnimated:YES completion:nil];
+                    
+                    UIAlertController *errorAlert  = [UIAlertController alertControllerWithTitle:@"Opps" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *done = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
+                    [errorAlert addAction:done];
+                    [self presentViewController:errorAlert animated:YES completion:nil];
+
+                });
+                
+            }];
+        }];
+        [delegateAlert addAction:cancel];
+        [delegateAlert addAction:ok];
+        [self presentViewController:delegateAlert animated:YES completion:nil];
         
     }
 }
@@ -164,6 +198,13 @@
 
 - (void)chef:(Chef *)chef didFinishedOrder:(PizzaOrder *)order {
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:order.chefId inSection:2]];
+        [((ChefOrdersCell*)cell) removeOrder:order];
+    });
+}
+
+- (void)chef:(Chef *)chef didCanceledOrder:(PizzaOrder *)order {
     dispatch_async(dispatch_get_main_queue(), ^{
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:order.chefId inSection:2]];
         [((ChefOrdersCell*)cell) removeOrder:order];
@@ -349,9 +390,18 @@
 }
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID{
-    NSString * message = [NSString stringWithFormat:@"%@:%@",peerID.displayName,[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+    
+    NSLog(@"didReceiveData");
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        // TODO: data handling
+        
+        PizzaOrder *order = [NSKeyedUnarchiver unarchivedObjectOfClass:[PizzaOrder class] fromData:data error:nil];
+        [self.factory createOrder:order.size toppings:order.toppings];
+        
+        for (Chef *chef in self.factory.chefs) {
+            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:chef.chefId inSection:2]];
+            [((ChefOrdersCell*)cell) reloadOrders:chef.remainOrders];
+        }
     });
 }
 

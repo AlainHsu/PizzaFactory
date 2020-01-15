@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)createOrders:(NSInteger)count size:(PizzaSize)size toppings:(NSSet<NSString *> *)toppings;
 
+- (void)updateOrder:(PizzaOrder*)order succeed:(void(^)(void))success fail:(void(^)(NSString *))failure;
+
+- (void)cancelOrder:(PizzaOrder *)order succeed:(void(^)(void))success fail:(void(^)(NSString *))failure;
+
 - (void)openFactory:(BOOL)open;
 
 @end

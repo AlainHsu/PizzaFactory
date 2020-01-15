@@ -94,7 +94,15 @@
     [defaults synchronize];
 }
 
+- (void)updateOrder:(PizzaOrder*)order succeed:(void(^)(void))success fail:(void(^)(NSString *))failure {
+    Chef *chef = self.chefs[order.chefId];
+    [chef updateOrder:order succeed:success fail:failure];
+}
 
+- (void)cancelOrder:(PizzaOrder *)order succeed:(void(^)(void))success fail:(void(^)(NSString *))failure {
+    Chef *chef = self.chefs[order.chefId];
+    [chef cancelOrder:order succeed:success fail:failure];
+}
 
 - (void)addOrders:(NSArray<PizzaOrder *> *)orders {
     for (PizzaOrder *order in orders) {
@@ -126,6 +134,12 @@
     [defaults setObject:ordersDic forKey:TOTAL_ORDER];
     [defaults synchronize];
     
+}
+
+- (void)chef:(Chef *)chef didCanceledOrder:(PizzaOrder *)order {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(chef:didCanceledOrder:)]) {
+        [self.delegate chef:chef didCanceledOrder:order];
+    }
 }
 
 - (void)chef:(Chef *)chef remaindOrdersNumber:(NSInteger)number {

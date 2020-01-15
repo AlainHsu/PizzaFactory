@@ -12,7 +12,7 @@
 
 - (instancetype)initWithOrderId:(NSInteger)identifier size:(PizzaSize)size topping:(NSSet<NSString *> *)toppings {
     if (self = [super init]) {
-        self.orderId = identifier;
+        _orderId = identifier;
         self.size = size;
         self.toppings = toppings;
     }
@@ -26,7 +26,7 @@
 
 - (id) initWithCoder: (NSCoder *)coder  {
     if (self = [super init]) {
-        self.orderId = [coder decodeIntegerForKey:@"order_id"];
+        _orderId = [coder decodeIntegerForKey:@"order_id"];
 
         self.size = [coder decodeIntegerForKey:@"order_size"];
 
@@ -45,6 +45,11 @@
 
     [coder encodeObject:self.toppings forKey:@"order_toppings"];
 
+}
+
+// Precenting property modification via KVC
++ (BOOL)accessInstanceVariablesDirectly {
+    return NO;
 }
 
 @end

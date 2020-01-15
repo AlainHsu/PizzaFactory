@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 
 @interface PizzaOrder : NSObject <NSSecureCoding>
 
-@property (assign, nonatomic) NSInteger orderId;
+@property (assign, nonatomic, readonly) NSInteger orderId;
 
 @property (assign, nonatomic) NSInteger chefId;
 
