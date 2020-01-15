@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9F0600AD23C9C38400837F5A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600AC23C9C38400837F5A /* AppDelegate.m */; };
-		9F0600B023C9C38400837F5A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0600AF23C9C38400837F5A /* SceneDelegate.m */; };
 		9F0600B623C9C38400837F5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0600B423C9C38400837F5A /* Main.storyboard */; };
 		9F0600B823C9C38500837F5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0600B723C9C38500837F5A /* Assets.xcassets */; };
 		9F0600BB23C9C38500837F5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0600B923C9C38500837F5A /* LaunchScreen.storyboard */; };
@@ -30,8 +29,6 @@
 		9F0600A823C9C38400837F5A /* PizzaFactory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PizzaFactory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0600AB23C9C38400837F5A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9F0600AC23C9C38400837F5A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9F0600AE23C9C38400837F5A /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		9F0600AF23C9C38400837F5A /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		9F0600B523C9C38400837F5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9F0600B723C9C38500837F5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F0600BA23C9C38500837F5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -93,8 +90,6 @@
 			children = (
 				9F0600AB23C9C38400837F5A /* AppDelegate.h */,
 				9F0600AC23C9C38400837F5A /* AppDelegate.m */,
-				9F0600AE23C9C38400837F5A /* SceneDelegate.h */,
-				9F0600AF23C9C38400837F5A /* SceneDelegate.m */,
 				9F0600E523C9FBD600837F5A /* HomeController.h */,
 				9F0600E623C9FBD600837F5A /* HomeController.m */,
 				9F0600D323C9FADC00837F5A /* ChefStatusCell.h */,
@@ -208,7 +203,6 @@
 				9F0600BE23C9C38500837F5A /* main.m in Sources */,
 				9F0600D523C9FADC00837F5A /* ChefStatusCell.m in Sources */,
 				9F0600CC23C9C46200837F5A /* PizzaFactory.m in Sources */,
-				9F0600B023C9C38400837F5A /* SceneDelegate.m in Sources */,
 				9F0600EA23CA064600837F5A /* PizzaOrderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

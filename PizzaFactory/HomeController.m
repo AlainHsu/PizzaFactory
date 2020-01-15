@@ -20,7 +20,7 @@
 
 #define IS_FIRST_LAUNCH @"is_first_launch"
 
-@interface HomeController ()<UICollectionViewDelegateFlowLayout, ChefOrderCellDelegate, PizzaFactoryDelegate, MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCAdvertiserAssistantDelegate>
+@interface HomeController ()<UICollectionViewDelegateFlowLayout, ChefOrderCellDelegate, PizzaFactoryDelegate, MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceBrowserDelegate>
 
 @property (strong, nonatomic) PizzaFactory *factory;
 @property (strong, nonatomic) NSSet *defaultToppings;
@@ -54,7 +54,7 @@
         [defaults setInteger:1 forKey:IS_FIRST_LAUNCH];
     }
     
-//    [self.factory openFactory:YES];
+    [self.factory openFactory:YES];
     
     [self createMC];
 }
@@ -70,7 +70,6 @@
     _session.delegate = self;
     
     _advertiser = [[MCAdvertiserAssistant alloc]initWithServiceType:@"pizza-factory" discoveryInfo:nil session:_session];
-    _advertiser.delegate = self;
     [_advertiser start];
     
     _brower = [[MCNearbyServiceBrowser alloc]initWithPeer:_peerID serviceType:@"pizza-factory"];
@@ -156,6 +155,8 @@
         [delegateAlert addAction:ok];
         [self presentViewController:delegateAlert animated:YES completion:nil];
 
+    } else {
+        
     }
 }
 
@@ -311,24 +312,8 @@
 
 #pragma mark - <MCNearbyServiceBrowserDelegate>
 
-- (void)advertiserAssistantWillPresentInvitation:(MCAdvertiserAssistant *)advertiserAssistant {
-    NSLog(@"advertiserAssistantWillPresentInvitation");
-}
-
-// An invitation was dismissed from screen.
-- (void)advertiserAssistantDidDismissInvitation:(MCAdvertiserAssistant *)advertiserAssistant {
-    NSLog(@"advertiserAssistantDidDismissInvitation");
-}
-
-
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info{
     NSLog(@"found peer: %@", peerID.displayName);
-    if (_browserViewController == nil) {
-        _browserViewController = [[MCBrowserViewController alloc]initWithServiceType:@"pizza-factory" session:_session];
-        _browserViewController.delegate = self;
-
-        [self presentViewController:_browserViewController animated:YES completion:nil];
-    }
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID{
